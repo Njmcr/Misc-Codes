@@ -105,8 +105,13 @@ client.on("message", message => {
   } else if(command === "harambe"){
     message.channel.send(harambeFace);
   } else if(command === "boris"){
-    message.channel.send(borisFace)
-  }
+    message.channel.send(borisFace);
+  } else if(command.includes("budderdog")) {
+      if((Math.floor(Math.random() * 2 + 1)) == 1) {
+      message.channel.send(budderdog1);
+      } else {message.channel.send(budderdog2)
+             }
+    }
 })
 
 
