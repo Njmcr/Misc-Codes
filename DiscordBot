@@ -82,51 +82,30 @@ client.on("message", message => {
 })
 
 client.on("message", message => {
-  var borislowercase = message.content.toLowerCase();
-  if(borislowercase === "boris"){
+  var command = message.content.toLowerCase();
+  if(command.includes("gg")){
+    if(message.author.id != "985885584524476516"){
+      message.channel.send(gg);
+    }
+  } else if(command === "you fucked that chicken didn't you"){
+      message.channel.send(gg);
+  } else if(command.includes("ez")){
+    message.channel.send(ez);
+    message.channel.send(ez2);
+  } else if(command.includes("random")){
+    message.channel.send(random);
+  } else if(command === "rock" && "the rock"){
+    message.channel.send(rockFace);
+  } else if(command.includes("sus")){
+    message.channel.send(rockFace);
+  } else if(command === "trump"){
+    message.channel.send(trumpFace);
+  } else if(command === "shrek"){
+    message.channel.send(shrekFace);
+  } else if(command === "harambe"){
+    message.channel.send(harambeFace);
+  } else if(command === "boris"){
     message.channel.send(borisFace)
-  }
-})
-
-client.on("message", message => {
-  var trumplowercase = message.content.toLowerCase();
-  if(trumplowercase === "trump"){
-    message.channel.send(trumpFace)
-  }
-})
-
-client.on("message", message => {
-  var harambelowercase = message.content.toLowerCase();
-  if(harambelowercase === "harambe"){
-    message.channel.send(harambeFace)
-  }
-})
-  
-client.on("message", message => {
-  var shreklowercase = message.content.toLowerCase();
-  if(shreklowercase === "shrek"){
-    message.channel.send(shrekFace)
-  }
-})
-
-client.on("message", message => {
-  var rocklowercase = message.content.toLowerCase();
-  if(rocklowercase === "rock"){
-    message.channel.send(rockFace)
-  }
-})
-
-client.on("message", message => {
-  var rocklowercase = message.content.toLowerCase();
-  if(rocklowercase === "the rock"){
-    message.channel.send(rockFace)
-  }
-})
-
-client.on("message", message => {
-  var rocklowercase = message.content.toLowerCase();
-  if(rocklowercase.includes("sus")){
-    message.channel.send(rockFace)
   }
 })
 
@@ -278,52 +257,65 @@ const rockFace = "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀�
 "⠀⢆⢣⡹⡭⣫⢯⢯⢯⢯⢯⢫⣚⡜⡜⢆⠆⢂⢂⠄⡐⠜⡜⡌⡂⢂⠐⠀⠂⢣⢣⢣⢒⠔⡒⠔⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢽⠠⢂⢂⠄⠄⠠⠠⢂⠐⠄⡀\n"
 
 
+//copy pastas
+
+const gg = "Hi guys, I was cooking last night, making\nsome chicken breasts. I had spilled some\nsoda on my pants, so I was cooking\nwithout             pants on. I was moving some\ntrays around and I accidentally dropped a\nchicken breast on the floor. But it hit my\npenis before it hit the floor. This morning\nmy penis seems like it is inflamed and the\npeehole hurts if I touch it. Is it possible I\ngot salmonella poisoning?"
+
+const ez = "❔What❔the fuck 😡😡 did you just fucking say about me, you little 🐕bitch🐕? I’ll have you know I graduated 🎓🎓 top🔝 of my class in the 🚢Navy🚢 Seals, and I’ve been involved in numerous 😯secret😯 raids on Al-Quaeda, and I have over❗❗ 300 ❗❗ confirmed 💀 kills 💀. I am trained in gorilla 🐒🐒 💥warfare 💥 and I’m the 🔝top🔝 sniper in the entire US 🔫 armed 🔫 forces 👮👮👮. You are nothing to me but just 🎯 another 🎯 target 🎯. I will wipe ❌ you ❌ the ❌ fuck ❌ out with 👀 precision 🎯🎯 the likes of which has never been 👀 seen 👀 before on this 🌎Earth🌎, mark 😡 my 😡 fucking 😡 words 😡. You think you can 👀 get away 👀with saying that shit to me over the Internet 💻? Think again, fucker. 👎👎👎 As we speak I am contacting my 🌐 secret network 🌐 of spies 👀👀👀 across the USA and your IP 🌐 is being traced 🕖 right now 🕧 so you better prepare for the ☔storm ☔, maggot 🐛🐛🐛. The storm ⚡⚡⚡ that wipes out the 😂 pathetic 😂 little thing you call your life. You’re 💀 fucking 💀💀💀 dead 💀💀💀, kid. I can be anywhere 🌎🌏🌍, anytime 🕧🕕🕦, and I can 💀 kill 💀 you💀 in over 🔢 seven 🔢 hundred 🔢 ways 📃, and that’s just with my ✋✋ bare hands✋✋. Not only am I extensively trained in 👊unarmed 👊 combat 👊, but I have access to the entire arsenal 🔫🔫🔫 of the United States 👮👮👮 Marine Corps 👮👮👮 and I will use it to its"
+
+const ez2 = "and I will use it to its full extent to 💀 wipe 💀 your 💀 miserable 💀 ass 💀 off the face of the continent 🌎🌎, you little 💩shit 💩. If only you could have known 😵😵 what 😈unholy 😈 retribution your little “clever” comment 📄📄 was about to 👎bring 👎 down 👎 upon you, maybe you would have held your fucking tongue👅👅👅. But you couldn’t ❌, you didn’t❌, and now you’re paying the price💲💲💲, you goddamn idiot. I will 💩 shit 💩 fury 😡😡😡 all over you and you will 😱😱😱 drown 😱😱😱in it. You’re 💀 fucking 💀 dead 💀, kiddo. 💀💀💀"
+
+const random = "Ban all porn. Now. Please. I need help. My dick is raw and I’m really into cake farts. What is wrong with me? I used to make my parents proud. Now I’m beating it to tentacles and 15 year old anime girls. Why, God? Why have you forsaken me? I just want to have vanilla, missionary sex with my wife but I can’t get it up for her anymore without thinking about being sodomized by a man in a gorilla suit. I’m too weak to admit that I need a therapist so just ban porn for everyone so I don’t have to come to terms with my own shame. It’s the only way."
+
+
+
+
 
 // looting
 
-const faction1 = ""
-const faction1Kingdom = ""
-const faction1Bank = ""
-const faction1Age = ""
-const faction1Leader = ""
-const faction1LastOnline = ""
-const faction1FirstPlayed = ""
-const faction1Coords = ""
-const colour1 = ""
-const url1 = ""
+const faction1 = "Spire"
+const faction1Kingdom = "Independent Faction"
+const faction1Bank = "20 Regals"
+const faction1Age = "4 months and 2 days"
+const faction1Leader = "cinebird"
+const faction1LastOnline = "4 weeks and 1 day"
+const faction1FirstPlayed = "4 months and 3 days"
+const faction1Coords = "Ithania: 2776, 4680"
+const colour1 = "#FFFFFF"
+const url1 = "http://map.massivecraft.com/?worldname=ithania&mapname=flat&zoom=5&x=2810&y=64&z=4679"
 
-const faction2 = ""
-const faction2Kingdom = ""
-const faction2Bank = ""
-const faction2Age = ""
-const faction2Leader = ""
-const faction2LastOnline = ""
-const faction2FirstPlayed = ""
-const faction2Coords = ""
-const colour2 = ""
-const url2 = ""
+const faction2 = "NightVale"
+const faction2Kingdom = "Kingdom of Silferia"
+const faction2Bank = "0 Regals"
+const faction2Age = "1 year 2 months 2 weeks"
+const faction2Leader = "ghosta_babes"
+const faction2LastOnline = "4 weeks and 1 day"
+const faction2FirstPlayed = "1 year 2 months"
+const faction2Coords = "Essa: 2518, 1227"
+const colour2 = "#FFFFFF"
+const url2 = "http://map.massivecraft.com/?worldname=essa&mapname=flat&zoom=5&x=2582&y=64&z=1220"
 
-const faction3 = ""
-const faction3Kingdom = ""
-const faction3Bank = ""
-const faction3Age = ""
-const faction3Leader = ""
-const faction3LastOnline = ""
-const faction3FirstPlayed = ""
-const faction3Coords = ""
-const colour3 = ""
-const url3 = ""
+const faction3 = "MontfortDR"
+const faction3Kingdom = "Independent Faction"
+const faction3Bank = "0 Regals"
+const faction3Age = "1 year, 2 weeks and 6 days"
+const faction3Leader = "Nochiee"
+const faction3LastOnline = "3 weeks and 6 days"
+const faction3FirstPlayed = "3 years and 5 months"
+const faction3Coords = "Essa: 5904, 4019"
+const colour3 = "#FFFFFF"
+const url3 = "http://map.massivecraft.com/?worldname=essa&mapname=flat&zoom=5&x=5963&y=64&z=4014"
 
-const faction4 = ""
-const faction4Kingdom = ""
-const faction4Bank = ""
-const faction4Age = ""
-const faction4Leader = ""
-const faction4LastOnline = ""
-const faction4FirstPlayed = ""
-const faction4Coords = ""
-const colour4 = ""
-const url4 = ""
+const faction4 = "Pulse [!EXPIRED!]"
+const faction4Kingdom = "Independent Faction"
+const faction4Bank = "0 Regals"
+const faction4Age = "4 months, 1 week and 2 days"
+const faction4Leader = "Ribena404"
+const faction4LastOnline = "4 weeks and 2 days"
+const faction4FirstPlayed = "7 months and 3 weeks"
+const faction4Coords = "Essa: 5655, 2703"
+const colour4 = "#FF0000"
+const url4 = "http://map.massivecraft.com/?worldname=essa&mapname=flat&zoom=7&x=5671&y=64&z=2701"
 
 
 client.login(process.env.token)
