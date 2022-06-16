@@ -64,8 +64,89 @@ client.on("message", message => {
     message.channel.send({ embeds: [Embed2]});
     message.channel.send({ embeds: [Embed3]});
     message.channel.send({ embeds: [Embed4]});
+  } else if(command === "purge"){
+      if(message.author.id != Nj && Notchy) {
+        message.reply("You don't have permission to do that!");
+    } else if (message.author.id === Nj && Notchy) {
+          if(!args[0]) return message.reply("Please enter the amount of messages you wish to clear!");
+          if(isNaN(args[0])) return message.reply("Please enter a valid number!");
+
+          if(args[0] > 100) return message.reply("Can't delete that many messages, please enter a number lower than 100!");
+          if(args[0] < 1) return message.reply("You must delete at least one message!");
+
+          message.channel.messages.fetch({limit: args[0]}).then(messages => {
+          message.channel.bulkDelete(messages);
+      });
+    }
   }
 })
+
+client.on("message", async message => {
+  if(message.content === "-reactroles"){
+    const channel = '966330821243961385'
+    const hypixel = message.guild.roles.cache.find(role => role.name === "Hypixel");
+    const massivecraft = message.guild.roles.cache.find(role => role.name === "Massivecraft");
+    const overwatch = message.guild.roles.cache.find(role => role.name === "Overwatch");
+    const massivecraftemoji =':Massivecraft:966331901617012766'
+    const hypixelemoji = ':hypixel:966331677502767224'
+    const overwatchemoji = ':Overwatch:966332622517202944'
+    
+    const reactionEmbed = new MessageEmbed()
+      .setColor('#00FFFF')
+      .setTitle('Reaction Roles!!')
+      .setURL('https://namemc.com/skin/1acc5e4cf528b146')
+      .setDescription('React to the corisponding emoji for the role!')
+      .addFields(
+        { name: 'Role', value:'Massivecraft\nOverwatch\nHypixel', inline:true },
+        { name: 'Emoji', value: '<:Massivecraft:966331901617012766>\n<:Overwatch:966332622517202944>\n<:hypixel:966331677502767224>', inline:true }
+      );
+  let messageEmbed = await message.channel.send({ embeds: [reactionEmbed]});
+  messageEmbed.react(massivecraftemoji);
+  messageEmbed.react(overwatchemoji);
+  messageEmbed.react(hypixelemoji)
+
+  
+  client.on('messageReactionAdd', async (reaction, user) => {
+    if(reaction.message.partial) await reaction.message.fetch();
+    if(reaction.partial) await reaction.fetch();
+    if(user.bot) return;
+    if(!reaction.message.guild) return;
+
+    if(reaction.message.channel.id == channel) {
+      if(reaction.emoji.name === massivecraftemoji) {
+        await reaction.message.guild.members.cache.get(user.id).roles.add(massivecraft)
+      } else if(reaction.emoji.name === hypixelemoji) {
+        await reaction.message.guild.members.cache.get(user.id).roles.add(hypixel)
+      } else if(reaction.emoji.name === overwatchemoji) {
+        await reaction.message.guild.members.cache.get(user.id).roles.add(overwatch)
+      }
+    } else {
+        return;
+    }
+    });
+  client.on('messageReactionRemove', async (reaction, user) => {
+    if(reaction.message.partial) await reaction.message.fetch();
+    if(reaction.partial) await reaction.fetch();
+    if(user.bot) return;
+    if(!reaction.message.guild) return;
+
+    if(reaction.message.channel.id == channel) {
+      if(reaction.emoji.name === massivecraftemoji) {
+        await reaction.message.guild.members.cache.get(user.id).roles.remove(massivecraft)
+      } else if(reaction.emoji.name === hypixelemoji) {
+        await reaction.message.guild.members.cache.get(user.id).roles.remove(hypixel)
+      } else if(reaction.emoji.name === overwatchemoji) {
+        await reaction.message.guild.members.cache.get(user.id).roles.remove(overwatch)
+      }
+    } else {
+        return;
+    }
+  });
+  }
+})
+
+
+
 
 client.on("message", message => {
   if(message.content === "??"){
@@ -77,16 +158,16 @@ client.on("message", message => {
       .addFields(
         { name:'Commands', value:'s!day d\ns!day d op\ns!week d\ns!week d op\ns!month d\ns!month d op\ns!lb op wins\ns!p\ns!p d\ns!p d op', inline: true}
       )
-    message.channel.send ({ embeds: [commands]})
+    message.channel.send ({ embeds: [commands]});
   }
 })
+      
 
 client.on("message", message => {
   var command = message.content.toLowerCase();
-  if(command.includes("gg")){
-    if(message.author.id != "985885584524476516"){
+  if(message.author.bot) return;
+  else if(command.includes("gg")){
       message.channel.send(gg);
-    }
   } else if(command === "you fucked that chicken didn't you"){
       message.channel.send(gg);
   } else if(command.includes("ez")){
@@ -111,8 +192,22 @@ client.on("message", message => {
       message.channel.send(budderdog1);
       } else {message.channel.send(budderdog2)
              }
-    }
+    
+  } else if(command.includes("porn")) {
+    message.channel.send(`I think ${message.author} is gonna go get back to watching porn, cya later!`);
+  }
 })
+
+// IDs
+
+const Nj = "530880318463541248"
+const Notchy = "297489214482677762"
+const Momo = "829364049447878659"
+const Mortal = "692103440590962819"
+const Al = "253682054766657536"
+const Made = "167460623200813066"
+const Matt = "805018207772606474"
+const NjAlt = "878427211227607112"
 
 
 // faces
@@ -326,9 +421,6 @@ const ez = "❔What❔the fuck 😡😡 did you just fucking say about me, you l
 const ez2 = "and I will use it to its full extent to 💀 wipe 💀 your 💀 miserable 💀 ass 💀 off the face of the continent 🌎🌎, you little 💩shit 💩. If only you could have known 😵😵 what 😈unholy 😈 retribution your little “clever” comment 📄📄 was about to 👎bring 👎 down 👎 upon you, maybe you would have held your fucking tongue👅👅👅. But you couldn’t ❌, you didn’t❌, and now you’re paying the price💲💲💲, you goddamn idiot. I will 💩 shit 💩 fury 😡😡😡 all over you and you will 😱😱😱 drown 😱😱😱in it. You’re 💀 fucking 💀 dead 💀, kiddo. 💀💀💀"
 
 const random = "Ban all porn. Now. Please. I need help. My dick is raw and I’m really into cake farts. What is wrong with me? I used to make my parents proud. Now I’m beating it to tentacles and 15 year old anime girls. Why, God? Why have you forsaken me? I just want to have vanilla, missionary sex with my wife but I can’t get it up for her anymore without thinking about being sodomized by a man in a gorilla suit. I’m too weak to admit that I need a therapist so just ban porn for everyone so I don’t have to come to terms with my own shame. It’s the only way."
-
-
-
 
 
 // looting
