@@ -1,0 +1,111 @@
+import requests
+import json
+from html.parser import HTMLParser
+import pandas as pd
+import xlsxwriter
+
+urls = {
+    'Essalonia': "http://map.massivecraft.com/standalone/MySQL_markers.php?marker=_markers_/marker_essalonia.json",
+    'Essa': "http://map.massivecraft.com/standalone/MySQL_markers.php?marker=_markers_/marker_essa.json",
+    'Ithania': "http://map.massivecraft.com/standalone/MySQL_markers.php?marker=_markers_/marker_ithania.json"
+}
+
+
+class HtmlParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.reset()
+        self.NEWTAGS = []
+        self.NEWATTRS = []
+        self.HTMLDATA = []
+
+    def handle_starttag(self, tag, attrs):
+        self.NEWTAGS.append(tag)
+        self.NEWATTRS.append(attrs)
+
+    def handle_data(self, data):
+        self.HTMLDATA.append(data)
+
+    def clean(self):
+        self.NEWTAGS = []
+        self.NEWATTRS = []
+        self.HTMLDATA = []
+
+
+def main():
+    data_frames = []
+
+    for url in urls.values():
+        response_text = get_data(url)
+        factions_json_desc_dict = parse_json(response_text)
+        data_frames.append(parse_html(factions_json_desc_dict))
+
+    df = pd.concat(data_frames)
+    df = df.sort_values(by=['faction'])
+    df = df.drop_duplicates(subset=['faction'])
+    df = df[df['member_count'] == "1"]
+    df = df.drop('member_count', axis=1)
+
+    print(df)
+
+    workbook  = xlsxwriter.Workbook('FromPython.xlsx')
+    worksheet = workbook.add_worksheet('Sheet1')
+
+    datatoexcel = pd.ExcelWriter("FromPython.xlsx", engine='xlsxwriter')
+
+    df.to_excel(datatoexcel, sheet_name="Sheet1")
+
+    datatoexcel.save()
+
+def get_data(url):
+    response = requests.get(url)
+    return response.text
+
+def parse_json(text):
+    json_dict = json.loads(text)
+    areas = json_dict["sets"]["factions_markerset"]["areas"]
+    factions = []
+    for item in areas.items():
+        factions.append(item[1]["desc"])
+
+    return factions
+
+def parse_html(data):
+    faction_dict = {}
+    parser = HtmlParser()
+
+    for item in data:
+        parser.feed(item)
+        data = parser.HTMLDATA
+        list_data = to_dict(data)
+        Faction = list_data[0]
+        Leader = list_data[1]
+        MemberCount = list_data[2]
+        
+        faction_dict[list_data[0]] = {
+          'faction': Faction,
+          'leader': "/seen " + Leader,
+          'member_count': MemberCount
+        }
+        parser.clean()
+
+    factions_dataframe = pd.DataFrame(list(faction_dict.values()))
+
+    return factions_dataframe
+
+
+def to_dict(faction_data):
+    faction_name = faction_data[0].strip()
+    faction_leader = faction_data[4].strip()
+    faction_member_count = get_member_count(faction_data).strip()
+
+    return faction_name, faction_leader, faction_member_count
+
+
+def get_member_count(faction_data):
+    for i in range(faction_data.__sizeof__()):
+        if (faction_data[i]) == "Member Count:":
+            return faction_data[i + 1]
+
+if __name__ == "__main__":
+    main()
