@@ -1,0 +1,117 @@
+function getMenu(world) {
+  return new ActionRowBuilder()
+    .addComponents(
+      new SelectMenuBuilder()
+        .setCustomId('worldsmenu')
+        .setPlaceholder(world)
+        .addOptions(
+          {
+            label: 'Essalonia',
+            value: 'Essalonia',
+          },
+          {
+            label: 'Essa',
+            value: 'Essa',
+          },
+          {
+            label: 'Ithania',
+            value: 'Ithania',
+          },
+          {
+            label: 'Rift',
+            value: 'Rift',
+          },
+          {
+            label: 'Market',
+            value: 'Market',
+          },
+          {
+            label: 'Creative',
+            value: 'Creative',
+          },
+          {
+            label: 'Regalia',
+            value: 'Regalia',
+          },
+        ),
+    )
+};
+
+
+
+bot.on('messageCreate', async (message) => {
+  if (!message.content.startsWith("m.")) return;
+  if (message.channel.id === outputChannelID) {
+    const msg = ((message.content).replace("m.", "")).split(" ");
+
+
+
+
+    if (msg[1].toLowerCase() == "essalonia") {
+      var worlds = "Essalonia"
+      message.reply({ ephemeral: true, embeds: [EssaloniaEmbed], components: [getMenu(worlds)] });
+    } else if (msg[1].toLowerCase() == "essa") {
+      var worlds = "Essa"
+      message.reply({ ephemeral: true, embeds: [EssaEmbed], components: [getMenu(worlds)] });
+    } else if (msg[1].toLowerCase() == "ithania") {
+      var worlds = "Ithania"
+      message.reply({ ephemeral: true, embeds: [IthaniaEmbed], components: [getMenu(worlds)] });
+    } else if (msg[1].toLowerCase() == "rift") {
+      var worlds = "Rift"
+      message.reply({ ephemeral: true, embeds: [RiftEmbed], components: [getMenu(worlds)] });
+    } else if (msg[1].toLowerCase() == "market") {
+      var worlds = "Market"
+      message.reply({ ephemeral: true, embeds: [MarketEmbed], components: [getMenu(worlds)] });
+    } else if (msg[1].toLowerCase() == "creative") {
+      var worlds = "Creative"
+      message.reply({ ephemeral: true, embeds: [CreativeEmbed], components: [getMenu(worlds)] });
+    } else if (msg[1].toLowerCase() == "regalia") {
+      var worlds = "Regalia"
+      message.reply({ ephemeral: true, embeds: [RegaliaEmbed], components: [getMenu(worlds)] });
+    }
+  };
+
+  const filter1 = (interaction) => interaction.customId === 'worldsmenu';
+  const collector1 = message.channel.createMessageComponentCollector({ filter1, time: 60_000 * 60 * 24 });
+
+  collector1.on('collect', i => {
+    if (!i.isSelectMenu()) return;
+    var world = i.values[0];
+    if (world == "Essalonia") {
+      i.editReply({
+        embeds: [EssaloniaEmbed],
+        components: [getMenu(world)]
+      });
+    } else if (world == "Market") {
+      i.editReply({
+        embeds: [MarketEmbed],
+        components: [getMenu(world)]
+      });
+    } else if (world == "Ithania") {
+      i.editReply({
+        embeds: [IthaniaEmbed],
+        components: [getMenu(world)]
+      });
+    } else if (world == "Essa") {
+      i.editReply({
+        embeds: [EssaEmbed],
+        components: [getMenu(world)]
+      });
+    } else if (world == "Rift") {
+      i.editReply({
+        embeds: [RiftEmbed],
+        components: [getMenu(world)]
+      });
+    } else if (world == "Creative") {
+      i.editReply({
+        embeds: [CreativeEmbed],
+        components: [getMenu(world)]
+      });
+    } else if (world == "Regalia") {
+      i.editReply({
+        embeds: [RegaliaEmbed],
+        components: [getMenu(world)]
+      });
+    }
+  });
+});
