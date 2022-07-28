@@ -1,117 +1,339 @@
-function getMenu(world) {
-  return new ActionRowBuilder()
-    .addComponents(
-      new SelectMenuBuilder()
-        .setCustomId('worldsmenu')
-        .setPlaceholder(world)
-        .addOptions(
-          {
-            label: 'Essalonia',
-            value: 'Essalonia',
-          },
-          {
-            label: 'Essa',
-            value: 'Essa',
-          },
-          {
-            label: 'Ithania',
-            value: 'Ithania',
-          },
-          {
-            label: 'Rift',
-            value: 'Rift',
-          },
-          {
-            label: 'Market',
-            value: 'Market',
-          },
-          {
-            label: 'Creative',
-            value: 'Creative',
-          },
-          {
-            label: 'Regalia',
-            value: 'Regalia',
-          },
-        ),
-    )
+import fetch from "node-fetch";
+import { Client, GatewayIntentBits, Partials, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, SelectMenuBuilder } from "discord.js";
+
+const bot = new Client({
+  intents: [
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildBans,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent
+  ],
+  'partials': [Partials.Channel, Partials.Message, Partials.User, Partials.GuildMember, Partials.Reaction]
+});
+
+async function getEssalonia(EssaloniaList) {
+  var date = Date.now();
+  var EssaloniaData = `http://map.massivecraft.com/standalone/MySQL_update.php?world=essalonia&ts=${date}`;
+  var essaloniaP = JSON.parse(JSON.stringify(await (await fetch(EssaloniaData)).json()));
+  var essalonia1 = essaloniaP.players;
+  var EssaloniaPlayers = [];
+  if (essalonia1 == "") {
+    EssaloniaList.push("No One is in !! this world");
+  };
+
+  for (let y in essalonia1) {
+    EssaloniaPlayers.push({ 'key': y, 'name': essalonia1[y]['name'] });
+  };
+
+  for (var i = 0; i < EssaloniaPlayers.length; i++) {
+    const playersList = essalonia1[EssaloniaPlayers[i]['key']]['name'];
+    var PlayersList = playersList.replace(/<|span |style="|>|\/|color:/g, "").replace(/#|"/g, '@split@here!');
+    if (essalonia1 != "") {
+      EssaloniaList.push(PlayersList.split("@split@here!")[2]);
+    }
+  };
+  return EssaloniaList;
 };
 
+async function getEssa(EssaList) {
+  var date = Date.now();
+  var EssaData = `http://map.massivecraft.com/standalone/MySQL_update.php?world=essa&ts=${date}`;
+  var essaP = JSON.parse(JSON.stringify(await (await fetch(EssaData)).json()));
+  var essa1 = essaP.players;
+  if (essa1 == "") {
+    EssaList.push("No One is in !! this world");
+  }
+
+  var EssaPlayers = [];
+
+  for (let y in essa1) {
+    EssaPlayers.push({ 'key': y, 'name': essa1[y]['name'] });
+  };
+
+  for (var i = 0; i < EssaPlayers.length; i++) {
+    const playersList = essa1[EssaPlayers[i]['key']]['name'];
+    var PlayersList = playersList.replace(/<|span |style="|>|\/|color:/g, "").replace(/#|"/g, '@split@here!');
+    if (essa1 != "") {
+      EssaList.push(PlayersList.split("@split@here!")[2]);
+    }
+  };
+  return EssaList;
+};
+
+
+async function getIthania(IthaniaList) {
+  var date = Date.now();
+  var IthaniaData = `http://map.massivecraft.com/standalone/MySQL_update.php?world=ithania&ts=${date}`;
+  var ithaniaP = JSON.parse(JSON.stringify(await (await fetch(IthaniaData)).json()));
+  var ithania1 = ithaniaP.players;
+  if (ithania1 == "") {
+    IthaniaList.push("No One is in !! this world");
+  }
+
+  var ithaniaPlayers = [];
+
+  for (let y in ithania1) {
+    ithaniaPlayers.push({ 'key': y, 'name': ithania1[y]['name'] });
+  };
+
+  for (var i = 0; i < ithaniaPlayers.length; i++) {
+    const playersList = ithania1[ithaniaPlayers[i]['key']]['name'];
+    var PlayersList = playersList.replace(/<|span |style="|>|\/|color:/g, "").replace(/#|"/g, '@split@here!');
+    if (ithania1 != "") {
+      IthaniaList.push(PlayersList.split("@split@here!")[2]);
+    }
+  };
+  return IthaniaList;
+}
+
+
+async function getRift(RiftList) {
+  var date = Date.now();
+  var RiftData = `http://map.massivecraft.com/standalone/MySQL_update.php?world=rift&ts=${date}`;
+  var RiftP = JSON.parse(JSON.stringify(await (await fetch(RiftData)).json()));
+  var Rift1 = RiftP.players;
+  if (Rift1 == "") {
+    RiftList.push("No One is in !! this world");
+  }
+
+  var RiftPlayers = [];
+
+  for (let y in Rift1) {
+    RiftPlayers.push({ 'key': y, 'name': Rift1[y]['name'] });
+  };
+
+  for (var i = 0; i < RiftPlayers.length; i++) {
+    const playersList = Rift1[RiftPlayers[i]['key']]['name'];
+    var PlayersList = playersList.replace(/<|span |style="|>|\/|color:/g, "").replace(/#|"/g, '@split@here!');
+    if (Rift1 != "") {
+      RiftList.push(PlayersList.split("@split@here!")[2]);
+    }
+  };
+  return RiftList;
+}
+
+async function getMarket(MarketList) {
+  var date = Date.now();
+  var MarketData = `http://map.massivecraft.com/standalone/MySQL_update.php?world=rift&ts=${date}`;
+  var MarketP = JSON.parse(JSON.stringify(await (await fetch(MarketData)).json()));
+  var Market1 = MarketP.players;
+  if (Market1 == "") {
+    MarketList.push("No One is in !! this world");
+  }
+
+  var MarketPlayers = [];
+
+  for (let y in Market1) {
+    MarketPlayers.push({ 'key': y, 'name': Market1[y]['name'] });
+  };
+
+  for (var i = 0; i < MarketPlayers.length; i++) {
+    const playersList = Market1[MarketPlayers[i]['key']]['name'];
+    var PlayersList = playersList.replace(/<|span |style="|>|\/|color:/g, "").replace(/#|"/g, '@split@here!');
+    if (Market1 != "") {
+      MarketList.push(PlayersList.split("@split@here!")[2]);
+    }
+  };
+  return MarketList;
+}
+
+async function getRegalia(RegaliaList) {
+  var date = Date.now();
+  var RegaliaData = `http://map.massivecraft.com/standalone/MySQL_update.php?world=regaliav5&ts=${date}`;
+  var regaliaP = JSON.parse(JSON.stringify(await (await fetch(RegaliaData)).json()));
+  var regalia1 = regaliaP.players;
+  if (regalia1 == "") {
+    RegaliaList.push("No One is in !! this world");
+  }
+
+  var regaliaPlayers = [];
+
+  for (let y in regalia1) {
+    regaliaPlayers.push({ 'key': y, 'name': regalia1[y]['name'] });
+  };
+
+  for (var i = 0; i < regaliaPlayers.length; i++) {
+    const playersList = regalia1[regaliaPlayers[i]['key']]['name'];
+    var PlayersList = playersList.replace(/<|span |style="|>|\/|color:/g, "").replace(/#|"/g, '@split@here!');
+    if (regalia1 != "") {
+      RegaliaList.push(PlayersList.split("@split@here!")[2]);
+    }
+  };
+  return RegaliaList;
+}
+
+async function getCreative(CreativeList) {
+  var date = Date.now();
+  var creativeData = `http://map.massivecraft.com/standalone/MySQL_update.php?world=creative1&ts=${date}`;
+  var creativeP = JSON.parse(JSON.stringify(await (await fetch(creativeData)).json()));
+  var creative1 = creativeP.players;
+  if (creative1 == "") {
+    CreativeList.push("No One is in !! this world");
+  }
+
+
+  var creativePlayers = [];
+
+  for (let y in creative1) {
+    creativePlayers.push({ 'key': y, 'name': creative1[y]['name'] });
+  };
+
+  for (var i = 0; i < creativePlayers.length; i++) {
+    const playersList = creative1[creativePlayers[i]['key']]['name'];
+    var PlayersList = playersList.replace(/<|span |style="|>|\/|color:/g, "").replace(/#|"/g, '@split@here!');
+    if (creative1 != "") {
+      CreativeList.push(PlayersList.split("@split@here!")[2]);
+    }
+  };
+  return CreativeList;
+}
 
 
 bot.on('messageCreate', async (message) => {
   if (!message.content.startsWith("m.")) return;
   if (message.channel.id === outputChannelID) {
-    const msg = ((message.content).replace("m.", "")).split(" ");
+    const msg = ((message.content.toLowerCase()).replace("m.", "")).split(" ");
+    if (msg[0] === "worlds") {
+      var EssaloniaList = [];
+      var EssaList = [];
+      var IthaniaList = [];
+      var RiftList = [];
+      var MarketList = [];
+      var RegaliaList = [];
+      var CreativeList = [];
+      
+      await getEssalonia(EssaloniaList);
+      await getEssa(EssaList);
+      await getIthania(IthaniaList);
+      await getRift(RiftList);
+      await getMarket(MarketList);
+      await getRegalia(RegaliaList);
+      await getCreative(CreativeList);
 
+      const EssaloniaEmbed = new EmbedBuilder()
+        .setTitle("Players In Essalonia")
+        .setColor("#FFFFFF")
+        .addFields(
+          { name: "Essalonia", value: essaloniastr, inline: true },
+        );
 
+      const EssaEmbed = new EmbedBuilder()
+        .setTitle("Players In Essa")
+        .setColor("#FFFFFF")
+        .addFields(
+          { name: "Essa", value: essastr, inline: true },
+        );
 
+      const IthaniaEmbed = new EmbedBuilder()
+        .setTitle("Players In Ithania")
+        .setColor("#FFFFFF")
+        .addFields(
+          { name: "Ithania", value: ithaniastr, inline: true },
+        );
 
-    if (msg[1].toLowerCase() == "essalonia") {
-      var worlds = "Essalonia"
-      message.reply({ ephemeral: true, embeds: [EssaloniaEmbed], components: [getMenu(worlds)] });
-    } else if (msg[1].toLowerCase() == "essa") {
-      var worlds = "Essa"
-      message.reply({ ephemeral: true, embeds: [EssaEmbed], components: [getMenu(worlds)] });
-    } else if (msg[1].toLowerCase() == "ithania") {
-      var worlds = "Ithania"
-      message.reply({ ephemeral: true, embeds: [IthaniaEmbed], components: [getMenu(worlds)] });
-    } else if (msg[1].toLowerCase() == "rift") {
-      var worlds = "Rift"
-      message.reply({ ephemeral: true, embeds: [RiftEmbed], components: [getMenu(worlds)] });
-    } else if (msg[1].toLowerCase() == "market") {
-      var worlds = "Market"
-      message.reply({ ephemeral: true, embeds: [MarketEmbed], components: [getMenu(worlds)] });
-    } else if (msg[1].toLowerCase() == "creative") {
-      var worlds = "Creative"
-      message.reply({ ephemeral: true, embeds: [CreativeEmbed], components: [getMenu(worlds)] });
-    } else if (msg[1].toLowerCase() == "regalia") {
-      var worlds = "Regalia"
-      message.reply({ ephemeral: true, embeds: [RegaliaEmbed], components: [getMenu(worlds)] });
+      const RiftEmbed = new EmbedBuilder()
+        .setTitle("Players In The Rift")
+        .setColor("#FFFFFF")
+        .addFields(
+          { name: "Rift", value: riftstr, inline: true },
+        );
+
+      const MarketEmbed = new EmbedBuilder()
+        .setTitle("Players In The Market")
+        .setColor("#FFFFFF")
+        .addFields(
+          { name: "Market", value: marketstr, inline: true },
+        );
+
+      const CreativeEmbed = new EmbedBuilder()
+        .setTitle("Players In Creative")
+        .setColor("#FFFFFF")
+        .addFields(
+          { name: "Creative", value: creativestr, inline: true },
+        );
+
+      const RegaliaEmbed = new EmbedBuilder()
+        .setTitle("Players In Regalia")
+        .setColor("#FFFFFF")
+        .addFields(
+          { name: "Regalia", value: regaliastr, inline: true },
+        );
+        
+        
+        
+        
+      if(msg[1] == "essalonia") {
+        var worlds = "Essalonia"
+        message.reply({ ephemeral: true, embeds: [EssaloniaEmbed], components: [getMenu(worlds)] });
+      } else if(msg[1] == "essa") {
+        var worlds = "Essa"
+        message.reply({ ephemeral: true, embeds: [EssaEmbed], components: [getMenu(worlds)] });
+      } else if(msg[1] == "ithania") {
+        var worlds = "Ithania"
+        message.reply({ ephemeral: true, embeds: [IthaniaEmbed], components: [getMenu(worlds)] });
+      } else if(msg[1] == "rift") {
+        var worlds = "Rift"
+        message.reply({ ephemeral: true, embeds: [RiftEmbed], components: [getMenu(worlds)] });
+      } else if(msg[1] == "market") {
+        var worlds = "Market"
+        message.reply({ ephemeral: true, embeds: [MarketEmbed], components: [getMenu(worlds)] });
+      } else if(msg[1] == "creative") {
+        var worlds = "Creative"
+        message.reply({ ephemeral: true, embeds: [CreativeEmbed], components: [getMenu(worlds)] });
+      } else if(msg[1] == "regalia") {
+        var worlds = "Regalia"
+        message.reply({ ephemeral: true, embeds: [RegaliaEmbed], components: [getMenu(worlds)] });
+      }
+    };
+
+      const filter1 = (interaction) => interaction.customId === 'worldsmenu';
+      const collector1 = message.channel.createMessageComponentCollector({ filter1, time: 60_000 * 60 * 24 });
+
+    collector1.on('collect', i => {
+        if (!i.isSelectMenu()) return;
+        var world = i.values[0];
+        if(world == "Essalonia") {
+          i.update({
+          embeds: [EssaloniaEmbed],
+          components: [getMenu(world)]
+          });
+        } else if(world == "Market") {
+          i.update({
+          embeds: [MarketEmbed],
+          components: [getMenu(world)]
+          });
+        } else if(world == "Ithania") {
+          i.update({
+          embeds: [IthaniaEmbed],
+          components: [getMenu(world)]
+          });
+        } else if(world == "Essa") {
+          i.update({
+          embeds: [EssaEmbed],
+          components: [getMenu(world)]
+          });
+        } else if(world == "Rift") {
+          i.update({
+          embeds: [RiftEmbed],
+          components: [getMenu(world)]
+          });
+        } else if(world == "Creative") {
+          i.update({
+          embeds: [CreativeEmbed],
+          components: [getMenu(world)]
+          });
+        } else if(world == "Regalia") {
+          i.update({
+          embeds: [RegaliaEmbed],
+          components: [getMenu(world)]
+          });
+        }
+      });
     }
-  };
-
-  const filter1 = (interaction) => interaction.customId === 'worldsmenu';
-  const collector1 = message.channel.createMessageComponentCollector({ filter1, time: 60_000 * 60 * 24 });
-
-  collector1.on('collect', i => {
-    if (!i.isSelectMenu()) return;
-    var world = i.values[0];
-    if (world == "Essalonia") {
-      i.editReply({
-        embeds: [EssaloniaEmbed],
-        components: [getMenu(world)]
-      });
-    } else if (world == "Market") {
-      i.editReply({
-        embeds: [MarketEmbed],
-        components: [getMenu(world)]
-      });
-    } else if (world == "Ithania") {
-      i.editReply({
-        embeds: [IthaniaEmbed],
-        components: [getMenu(world)]
-      });
-    } else if (world == "Essa") {
-      i.editReply({
-        embeds: [EssaEmbed],
-        components: [getMenu(world)]
-      });
-    } else if (world == "Rift") {
-      i.editReply({
-        embeds: [RiftEmbed],
-        components: [getMenu(world)]
-      });
-    } else if (world == "Creative") {
-      i.editReply({
-        embeds: [CreativeEmbed],
-        components: [getMenu(world)]
-      });
-    } else if (world == "Regalia") {
-      i.editReply({
-        embeds: [RegaliaEmbed],
-        components: [getMenu(world)]
-      });
-    }
-  });
+  }
 });
+        
+
+
+
